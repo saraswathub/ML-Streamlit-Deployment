@@ -2,7 +2,7 @@
 
 # Iris Species Classification using Random Forest
 
-A machine learning project that classifies iris flowers into three species using the Random Forest algorithm. This project demonstrates basic data preprocessing, model training, and evaluation using the famous Iris dataset.
+A machine learning project that classifies iris flowers into three species using the Random Forest algorithm. This project includes both a command-line classifier and an interactive Streamlit web application for real-time predictions.
 
 ## Dataset
 
@@ -13,11 +13,19 @@ The project uses the Iris dataset (`Iris.csv`), which contains:
 
 ## Features
 
+- **Command-line classifier** for batch processing
+- **Interactive Streamlit web app** with real-time predictions
 - Data preprocessing and cleaning
 - Species encoding (text to numeric labels)
 - Train-test split (70% training, 30% testing)
 - Random Forest classification
 - Model accuracy evaluation
+- **Web app features:**
+  - Interactive sliders for input
+  - Real-time predictions with confidence scores
+  - Data visualizations and charts
+  - Model performance metrics
+  - Confusion matrix and classification report
 
 ## Requirements
 
@@ -25,6 +33,10 @@ The project uses the Iris dataset (`Iris.csv`), which contains:
 pandas
 numpy
 scikit-learn
+streamlit
+plotly
+seaborn
+matplotlib
 ```
 
 ## Installation
@@ -37,12 +49,19 @@ cd iris-classification
 
 2. Install required packages:
 ```bash
-pip install pandas numpy scikit-learn
+pip install pandas numpy scikit-learn streamlit plotly seaborn matplotlib
+```
+
+Or using the requirements file:
+```bash
+pip install -r requirements.txt
 ```
 
 3. Ensure you have the `Iris.csv` file in the project directory
 
 ## Usage
+
+### Command Line Version
 
 Run the classification script:
 
@@ -56,6 +75,27 @@ The script will:
 3. Train a Random Forest classifier
 4. Make predictions on the test set
 5. Display the accuracy score
+
+### Streamlit Web App
+
+Launch the interactive web application:
+
+```bash
+streamlit run app.py
+```
+
+The web app provides:
+- **Interactive input sliders** for flower measurements
+- **Real-time predictions** with confidence scores
+- **Visualizations** of the dataset and model performance
+- **Model evaluation metrics** including confusion matrix
+- **Feature importance** analysis
+
+#### Web App Features:
+- 🎯 **Live Predictions**: Adjust sliders to see instant predictions
+- 📊 **Interactive Charts**: Plotly-powered visualizations
+- 🔍 **Model Insights**: Confusion matrix and classification report
+- 📈 **Data Exploration**: Scatter plots and distribution charts
 
 ## Code Structure
 
@@ -96,15 +136,53 @@ score = accuracy_score(y_test, y_pred)
 | Iris-versicolor | 1 |
 | Iris-virginica | 2 |
 
-## Expected Results
+## Deployment
 
-The Random Forest classifier typically achieves high accuracy (>95%) on the Iris dataset due to the clear separation between species based on the measured features.
+### Local Deployment
+```bash
+streamlit run app.py
+```
+
+### Streamlit Cloud Deployment
+
+1. Push your code to GitHub
+2. Go to [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub repository
+4. Select `app.py` as your main file
+5. Deploy!
+
+### Heroku Deployment
+
+1. Create a `Procfile`:
+```
+web: sh setup.sh && streamlit run app.py
+```
+
+2. Create `setup.sh`:
+```bash
+mkdir -p ~/.streamlit/
+echo "\
+[server]\n\
+headless = true\n\
+port = $PORT\n\
+enableCORS = false\n\
+\n\
+" > ~/.streamlit/config.toml
+```
+
+3. Deploy to Heroku:
+```bash
+heroku create your-app-name
+git push heroku main
+```
 
 ## File Structure
 
 ```
 ├── iris_classifier.py    # Main classification script
-├── Iris.csv             # Dataset file
+├── app.py               # Streamlit web application
+├── Iris.csv             # Dataset file (optional - app uses sklearn dataset)
+├── requirements.txt     # Python dependencies
 └── README.md            # This file
 ```
 
